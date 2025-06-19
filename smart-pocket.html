@@ -1,0 +1,2033 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Pocket - La billetera del futuro</title>
+    <style>
+      /* Reset and base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        line-height: 1.6;
+        color: #1e293b;
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #64748b;
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #475569;
+      }
+
+      /* Utility classes */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.75rem;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(to right, #059669, #10b981);
+        color: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-primary:hover {
+        background: linear-gradient(to right, #047857, #059669);
+        transform: translateY(-1px);
+        box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+      }
+
+      .btn-outline {
+        border: 1px solid #475569;
+        color: #475569;
+        background: transparent;
+      }
+
+      .btn-outline:hover {
+        background: #475569;
+        color: white;
+      }
+
+      /* Header styles */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 4rem;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .logo-icon {
+        width: 2rem;
+        height: 2rem;
+        background: linear-gradient(to bottom right, #334155, #0f172a);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .logo-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: #334155;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s ease;
+      }
+
+      .nav-link:hover {
+        color: #0f172a;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+
+      .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border-bottom: 1px solid #e2e8f0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        padding: 1rem;
+      }
+
+      .mobile-nav.active {
+        display: block;
+      }
+
+      .mobile-nav-link {
+        display: block;
+        color: #334155;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 0;
+        transition: color 0.3s ease;
+      }
+
+      .mobile-nav-link:hover {
+        color: #0f172a;
+      }
+
+      /* Hero section */
+      .hero {
+        background: linear-gradient(to bottom right, #f8fafc, #ffffff);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 4rem;
+      }
+
+      .hero-grid {
+        display: grid;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #0f172a;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+      }
+
+      .hero-gradient {
+        background: linear-gradient(to right, #059669, #10b981);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-description {
+        font-size: 1.125rem;
+        color: #334155;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-image {
+        position: relative;
+      }
+
+      .hero-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 1rem;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+
+      .floating-badge {
+        position: absolute;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .floating-badge-top {
+        top: -1rem;
+        right: -1rem;
+        background: #10b981;
+        color: white;
+      }
+
+      .floating-badge-bottom {
+        bottom: -1rem;
+        left: -1rem;
+        background: #334155;
+        color: white;
+      }
+
+      /* Section styles */
+      .section {
+        padding: 5rem 0;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #0f172a;
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .section-description {
+        font-size: 1.125rem;
+        color: #334155;
+        text-align: center;
+        max-width: 768px;
+        margin: 0 auto 4rem;
+      }
+
+      /* About section */
+      .about {
+        background: white;
+      }
+
+      .about-grid {
+        display: grid;
+        gap: 3rem;
+        align-items: center;
+      }
+
+      .video-placeholder {
+        position: relative;
+        cursor: pointer;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+
+      .video-placeholder img {
+        width: 100%;
+        height: auto;
+      }
+
+      .video-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .video-placeholder:hover .video-overlay {
+        background: rgba(0, 0, 0, 0.4);
+      }
+
+      .play-button {
+        width: 5rem;
+        height: 5rem;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+      }
+
+      .video-placeholder:hover .play-button {
+        transform: scale(1.1);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      .feature-card {
+        text-align: center;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        transition: background 0.3s ease;
+      }
+
+      .feature-card-green {
+        background: #ecfdf5;
+      }
+
+      .feature-card-green:hover {
+        background: #d1fae5;
+      }
+
+      .feature-card-gray {
+        background: #f8fafc;
+      }
+
+      .feature-card-gray:hover {
+        background: #f1f5f9;
+      }
+
+      .feature-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+      }
+
+      .feature-icon-green {
+        background: #10b981;
+      }
+
+      .feature-icon-gray {
+        background: #334155;
+      }
+
+      /* Advantages section */
+      .advantages {
+        background: linear-gradient(to bottom right, #f8fafc, #ecfdf5);
+      }
+
+      .advantages-grid {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .advantage-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .advantage-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .advantage-icon {
+        width: 4rem;
+        height: 4rem;
+        background: linear-gradient(to bottom right, #10b981, #334155);
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        transition: transform 0.3s ease;
+      }
+
+      .advantage-card:hover .advantage-icon {
+        transform: scale(1.1);
+      }
+
+      .advantage-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.75rem;
+        text-align: center;
+      }
+
+      .advantage-description {
+        color: #334155;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .feature-list {
+        list-style: none;
+      }
+
+      .feature-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        color: #334155;
+        font-size: 0.875rem;
+      }
+
+      .feature-dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        background: #10b981;
+        border-radius: 50%;
+        margin-right: 0.75rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
+      .stat-label {
+        font-size: 0.875rem;
+        color: #334155;
+      }
+
+      /* Products section */
+      .products {
+        background: white;
+      }
+
+      .product-slider {
+        position: relative;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+
+      .product-slides {
+        display: flex;
+        transition: transform 0.5s ease;
+      }
+
+      .product-slide {
+        width: 100%;
+        flex-shrink: 0;
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+        padding: 2rem;
+        background: linear-gradient(to bottom right, #f8fafc, #ecfdf5);
+      }
+
+      .product-image {
+        position: relative;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 20rem;
+        object-fit: cover;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .product-price {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #10b981;
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 2rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .product-info h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 0.75rem;
+      }
+
+      .product-info p {
+        color: #334155;
+        margin-bottom: 1.5rem;
+      }
+
+      .product-features {
+        margin-bottom: 1.5rem;
+      }
+
+      .product-features h4 {
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+      }
+
+      .slider-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 3rem;
+        height: 3rem;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .slider-nav:hover {
+        background: #f8fafc;
+      }
+
+      .slider-nav-prev {
+        left: 1rem;
+      }
+
+      .slider-nav-next {
+        right: 1rem;
+      }
+
+      .slider-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 2rem;
+      }
+
+      .slider-dot {
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background: #cbd5e1;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .slider-dot.active {
+        background: #10b981;
+      }
+
+      /* Reviews section */
+      .reviews {
+        background: linear-gradient(to bottom right, #ecfdf5, #f8fafc);
+      }
+
+      .reviews-grid {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .review-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+      }
+
+      .review-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      .review-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+
+      .review-avatar {
+        width: 3rem;
+        height: 3rem;
+        background: linear-gradient(to bottom right, #10b981, #334155);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 600;
+        margin-right: 1rem;
+      }
+
+      .review-author h3 {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .review-author p {
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+
+      .review-stars {
+        display: flex;
+        gap: 0.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .star {
+        width: 1rem;
+        height: 1rem;
+        fill: #fbbf24;
+        color: #fbbf24;
+      }
+
+      .star.empty {
+        fill: #cbd5e1;
+        color: #cbd5e1;
+      }
+
+      .trust-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 4rem;
+        text-align: center;
+      }
+
+      /* Contact section */
+      .contact {
+        background: white;
+      }
+
+      .contact-grid {
+        display: grid;
+        gap: 3rem;
+      }
+
+      .contact-form {
+        background: linear-gradient(to bottom right, #f8fafc, #ecfdf5);
+        border-radius: 1rem;
+        padding: 2rem;
+      }
+
+      .contact-form h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-label {
+        display: block;
+        color: #0f172a;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        background: white;
+        transition: border-color 0.3s ease;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: #10b981;
+        box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      }
+
+      .form-textarea {
+        min-height: 7.5rem;
+        resize: vertical;
+      }
+
+      .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .contact-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .contact-icon-green {
+        background: #10b981;
+      }
+
+      .contact-icon-gray {
+        background: #334155;
+      }
+
+      .contact-details h4 {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .contact-details p {
+        color: #334155;
+      }
+
+      .map-placeholder {
+        background: #f1f5f9;
+        border-radius: 1rem;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .map-grid {
+        position: absolute;
+        inset: 0;
+        opacity: 0.1;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .map-grid div {
+        border: 1px solid #cbd5e1;
+      }
+
+      .map-content {
+        position: relative;
+        z-index: 10;
+      }
+
+      .map-icon {
+        width: 3rem;
+        height: 3rem;
+        color: #334155;
+        margin: 0 auto 1rem;
+      }
+
+      /* Footer */
+      .footer {
+        background: #0f172a;
+        color: white;
+        padding: 4rem 0;
+      }
+
+      .footer-grid {
+        display: grid;
+        gap: 2rem;
+      }
+
+      .footer-brand {
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-logo-icon {
+        width: 2rem;
+        height: 2rem;
+        background: linear-gradient(to bottom right, #10b981, #059669);
+        border-radius: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .footer-logo-text {
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .footer-description {
+        color: #cbd5e1;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-address {
+        font-size: 0.875rem;
+        color: #94a3b8;
+      }
+
+      .footer-section h3 {
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.75rem;
+      }
+
+      .footer-links a {
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #cbd5e1;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .social-link:hover {
+        color: white;
+      }
+
+      .social-icon {
+        width: 1.25rem;
+        height: 1.25rem;
+        transition: transform 0.3s ease;
+      }
+
+      .social-link:hover .social-icon {
+        transform: scale(1.1);
+      }
+
+      .footer-bottom {
+        border-top: 1px solid #1e293b;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .footer-bottom p {
+        color: #94a3b8;
+        font-size: 0.875rem;
+      }
+
+      /* Responsive design */
+      @media (min-width: 640px) {
+        .container {
+          padding: 0 1.5rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .trust-stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (min-width: 768px) {
+        .mobile-menu-btn {
+          display: none;
+        }
+
+        .nav {
+          display: flex;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .hero-content {
+          text-align: left;
+        }
+
+        .about-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .advantages-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .product-slide {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .reviews-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .footer-bottom {
+          flex-direction: row;
+          justify-content: space-between;
+          text-align: left;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (max-width: 767px) {
+        .nav {
+          display: none;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .section-title {
+          font-size: 2rem;
+        }
+
+        .container {
+          padding: 0 1rem;
+        }
+      }
+
+      /* Icon styles */
+      .icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .icon-white {
+        color: white;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="container">
+        <div class="header-content">
+          <!-- Logo -->
+          <div class="logo">
+            <div class="logo-icon">
+              <svg class="icon icon-white" viewBox="0 0 24 24">
+                <path
+                  d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"
+                />
+                <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+              </svg>
+            </div>
+            <span class="logo-text">Smart Pocket</span>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <nav class="nav">
+            <a href="#hero" class="nav-link">Inicio</a>
+            <a href="#about" class="nav-link">¿Qué es Smart Pocket?</a>
+            <a href="#advantages" class="nav-link">Ventajas</a>
+            <a href="#models" class="nav-link">Modelos</a>
+            <a href="#reviews" class="nav-link">Opiniones</a>
+            <a href="#contact" class="nav-link">Contacto</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+            <svg class="icon" viewBox="0 0 24 24">
+              <line x1="4" x2="20" y1="6" y2="6" />
+              <line x1="4" x2="20" y1="12" y2="12" />
+              <line x1="4" x2="20" y1="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav" id="mobileNav">
+          <a href="#hero" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >Inicio</a
+          >
+          <a href="#about" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >¿Qué es Smart Pocket?</a
+          >
+          <a
+            href="#advantages"
+            class="mobile-nav-link"
+            onclick="closeMobileMenu()"
+            >Ventajas</a
+          >
+          <a href="#models" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >Modelos</a
+          >
+          <a href="#reviews" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >Opiniones</a
+          >
+          <a href="#contact" class="mobile-nav-link" onclick="closeMobileMenu()"
+            >Contacto</a
+          >
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <!-- Content -->
+          <div class="hero-content">
+            <h1 class="hero-title">
+              La billetera del <span class="hero-gradient">futuro</span>
+            </h1>
+            <p class="hero-description">
+              Protege tu dinero y documentos con tecnología GPS, bloqueo RFID y
+              batería recargable. Delgada, moderna y siempre conectada.
+            </p>
+            <a href="#about" class="btn btn-primary">
+              Conocé cómo funciona
+              <svg class="icon" viewBox="0 0 24 24" style="margin-left: 0.5rem">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Product Image -->
+          <div class="hero-image">
+            <img
+              src="https://images.pexels.com/photos/4452506/pexels-photo-4452506.jpeg"
+              alt="Smart Pocket - Billetera inteligente"
+            />
+            <div class="floating-badge floating-badge-top">GPS Integrado</div>
+            <div class="floating-badge floating-badge-bottom">Bloqueo RFID</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about">
+      <div class="container">
+        <h2 class="section-title">¿Qué es Smart Pocket?</h2>
+        <p class="section-description">
+          Smart Pocket es una billetera inteligente que combina diseño
+          minimalista con tecnología de vanguardia para proteger tus
+          pertenencias más importantes.
+        </p>
+
+        <div class="about-grid">
+          <!-- Video Simulation -->
+          <div class="video-placeholder">
+            <img
+              src="https://images.pexels.com/photos/4050289/pexels-photo-4050289.jpeg"
+              alt="Cómo funciona Smart Pocket"
+            />
+            <div class="video-overlay">
+              <div class="play-button">
+                <svg
+                  class="icon"
+                  viewBox="0 0 24 24"
+                  style="margin-left: 0.25rem"
+                >
+                  <polygon points="6,3 20,12 6,21" />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Features Grid -->
+          <div class="features-grid">
+            <div class="feature-card feature-card-green">
+              <div class="feature-icon feature-icon-green">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <h3
+                style="font-weight: 600; color: #0f172a; margin-bottom: 0.5rem"
+              >
+                Rastreo GPS
+              </h3>
+              <p style="font-size: 0.875rem; color: #334155">
+                Localiza tu billetera desde cualquier lugar del mundo
+              </p>
+            </div>
+
+            <div class="feature-card feature-card-gray">
+              <div class="feature-icon feature-icon-gray">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <h3
+                style="font-weight: 600; color: #0f172a; margin-bottom: 0.5rem"
+              >
+                Protección RFID
+              </h3>
+              <p style="font-size: 0.875rem; color: #334155">
+                Bloquea lecturas no autorizadas de tus tarjetas
+              </p>
+            </div>
+
+            <div class="feature-card feature-card-gray">
+              <div class="feature-icon feature-icon-gray">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <rect width="16" height="10" x="2" y="7" rx="2" ry="2" />
+                  <line x1="22" x2="22" y1="11" y2="13" />
+                  <line x1="6" x2="6" y1="11" y2="13" />
+                  <line x1="10" x2="10" y1="11" y2="13" />
+                  <line x1="14" x2="14" y1="11" y2="13" />
+                </svg>
+              </div>
+              <h3
+                style="font-weight: 600; color: #0f172a; margin-bottom: 0.5rem"
+              >
+                Batería USB
+              </h3>
+              <p style="font-size: 0.875rem; color: #334155">
+                Carga rápida por USB-C, hasta 30 días de autonomía
+              </p>
+            </div>
+
+            <div class="feature-card feature-card-green">
+              <div class="feature-icon feature-icon-green">
+                <div
+                  style="
+                    width: 1.5rem;
+                    height: 1.5rem;
+                    background: white;
+                    border-radius: 0.125rem;
+                  "
+                ></div>
+              </div>
+              <h3
+                style="font-weight: 600; color: #0f172a; margin-bottom: 0.5rem"
+              >
+                Diseño Ultra Slim
+              </h3>
+              <p style="font-size: 0.875rem; color: #334155">
+                Solo 8mm de grosor, cabe en cualquier bolsillo
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Advantages Section -->
+    <section id="advantages" class="section advantages">
+      <div class="container">
+        <h2 class="section-title">Ventajas que marcan la diferencia</h2>
+        <p class="section-description">
+          Tres pilares tecnológicos que hacen de Smart Pocket la billetera más
+          avanzada del mercado.
+        </p>
+
+        <div class="advantages-grid">
+          <div class="advantage-card">
+            <div class="advantage-icon">
+              <svg class="icon icon-white" viewBox="0 0 24 24">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <h3 class="advantage-title">GPS Incorporado</h3>
+            <p class="advantage-description">
+              Sistema de geolocalización preciso que te permite encontrar tu
+              billetera desde la aplicación móvil. Recibe notificaciones si te
+              alejas demasiado.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <div class="feature-dot"></div>
+                Localización en tiempo real
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Alertas de distancia
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Historial de ubicaciones
+              </li>
+            </ul>
+          </div>
+
+          <div class="advantage-card">
+            <div class="advantage-icon">
+              <svg class="icon icon-white" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </div>
+            <h3 class="advantage-title">Bloqueo RFID</h3>
+            <p class="advantage-description">
+              Protección avanzada contra el robo de datos de tarjetas de crédito
+              y débito. Tecnología de blindaje electromagnético integrada.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <div class="feature-dot"></div>
+                Bloqueo 100% efectivo
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Compatible con todas las tarjetas
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Sin interferencias
+              </li>
+            </ul>
+          </div>
+
+          <div class="advantage-card">
+            <div class="advantage-icon">
+              <svg class="icon icon-white" viewBox="0 0 24 24">
+                <path
+                  d="M15 7h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1"
+                />
+                <path d="M9 5a2 2 0 0 1 4 0v2a2 2 0 0 1-4 0V5Z" />
+              </svg>
+            </div>
+            <h3 class="advantage-title">Batería Recargable</h3>
+            <p class="advantage-description">
+              Batería de larga duración con carga rápida USB-C. Diseñada para
+              uso intensivo sin comprometer el diseño ultra delgado.
+            </p>
+            <ul class="feature-list">
+              <li>
+                <div class="feature-dot"></div>
+                30 días de autonomía
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Carga rápida 2 horas
+              </li>
+              <li>
+                <div class="feature-dot"></div>
+                Indicador LED de batería
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div>
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">Precisión GPS</div>
+          </div>
+          <div>
+            <div class="stat-number">30</div>
+            <div class="stat-label">Días de batería</div>
+          </div>
+          <div>
+            <div class="stat-number">8mm</div>
+            <div class="stat-label">Grosor total</div>
+          </div>
+          <div>
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Bloqueo RFID</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="models" class="section products">
+      <div class="container">
+        <h2 class="section-title">Modelos Smart Pocket</h2>
+        <p class="section-description">
+          Encuentra el modelo perfecto para tu estilo de vida. Cada uno diseñado
+          con atención al detalle y tecnología de vanguardia.
+        </p>
+
+        <div class="product-slider">
+          <div class="product-slides" id="productSlides">
+            <!-- Product 1 -->
+            <div class="product-slide">
+              <div class="product-image">
+                <img
+                  src="https://images.pexels.com/photos/4452506/pexels-photo-4452506.jpeg"
+                  alt="Smart Pocket Classic"
+                />
+                <div class="product-price">$299</div>
+              </div>
+              <div class="product-info">
+                <h3>Smart Pocket Classic</h3>
+                <p>
+                  El modelo clásico con todas las funciones esenciales. Perfecto
+                  para uso diario.
+                </p>
+                <div class="product-features">
+                  <h4>Características:</h4>
+                  <ul class="feature-list">
+                    <li>
+                      <div class="feature-dot"></div>
+                      GPS básico
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      RFID
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      30 días batería
+                    </li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-primary">
+                  Ver más detalles
+                  <svg
+                    class="icon"
+                    viewBox="0 0 24 24"
+                    style="margin-left: 0.5rem"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-slide">
+              <div class="product-image">
+                <img
+                  src="https://images.pexels.com/photos/30559957/pexels-photo-30559957.jpeg"
+                  alt="Smart Pocket Pro"
+                />
+                <div class="product-price">$399</div>
+              </div>
+              <div class="product-info">
+                <h3>Smart Pocket Pro</h3>
+                <p>
+                  Versión premium con GPS avanzado y funciones adicionales de
+                  seguridad.
+                </p>
+                <div class="product-features">
+                  <h4>Características:</h4>
+                  <ul class="feature-list">
+                    <li>
+                      <div class="feature-dot"></div>
+                      GPS avanzado
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      RFID Pro
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      45 días batería
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      App premium
+                    </li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-primary">
+                  Ver más detalles
+                  <svg
+                    class="icon"
+                    viewBox="0 0 24 24"
+                    style="margin-left: 0.5rem"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-slide">
+              <div class="product-image">
+                <img
+                  src="https://images.pexels.com/photos/4219860/pexels-photo-4219860.jpeg"
+                  alt="Smart Pocket Executive"
+                />
+                <div class="product-price">$499</div>
+              </div>
+              <div class="product-info">
+                <h3>Smart Pocket Executive</h3>
+                <p>
+                  Diseño ejecutivo en cuero premium con todas las
+                  características tecnológicas.
+                </p>
+                <div class="product-features">
+                  <h4>Características:</h4>
+                  <ul class="feature-list">
+                    <li>
+                      <div class="feature-dot"></div>
+                      GPS premium
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      RFID militar
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      60 días batería
+                    </li>
+                    <li>
+                      <div class="feature-dot"></div>
+                      Cuero italiano
+                    </li>
+                  </ul>
+                </div>
+                <a href="#" class="btn btn-primary">
+                  Ver más detalles
+                  <svg
+                    class="icon"
+                    viewBox="0 0 24 24"
+                    style="margin-left: 0.5rem"
+                  >
+                    <path d="m9 18 6-6-6-6" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <button class="slider-nav slider-nav-prev" onclick="prevSlide()">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button class="slider-nav slider-nav-next" onclick="nextSlide()">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          <!-- Dots Indicator -->
+          <div class="slider-dots">
+            <button class="slider-dot active" onclick="goToSlide(0)"></button>
+            <button class="slider-dot" onclick="goToSlide(1)"></button>
+            <button class="slider-dot" onclick="goToSlide(2)"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="reviews" class="section reviews">
+      <div class="container">
+        <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+        <p class="section-description">
+          Miles de usuarios confían en Smart Pocket para proteger sus
+          pertenencias más importantes.
+        </p>
+
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">MG</div>
+              <div class="review-author">
+                <h3>María González</h3>
+                <p>Buenos Aires</p>
+              </div>
+            </div>
+            <div class="review-stars">
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+            </div>
+            <blockquote style="color: #334155">
+              "Increíble billetera. El GPS me salvó cuando la perdí en un taxi.
+              La batería dura exactamente lo que prometen."
+            </blockquote>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">CR</div>
+              <div class="review-author">
+                <h3>Carlos Rodríguez</h3>
+                <p>Córdoba</p>
+              </div>
+            </div>
+            <div class="review-stars">
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+            </div>
+            <blockquote style="color: #334155">
+              "El diseño es muy elegante y delgado. La protección RFID funciona
+              perfectamente. Muy recomendable para viajes."
+            </blockquote>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="review-avatar">AF</div>
+              <div class="review-author">
+                <h3>Ana Fernández</h3>
+                <p>Rosario</p>
+              </div>
+            </div>
+            <div class="review-stars">
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+              <svg class="star" viewBox="0 0 24 24">
+                <polygon
+                  points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"
+                />
+              </svg>
+            </div>
+            <blockquote style="color: #334155">
+              "Excelente calidad. La aplicación es muy intuitiva y las
+              notificaciones de distancia son muy útiles en el día a día."
+            </blockquote>
+          </div>
+        </div>
+
+        <!-- Trust Indicators -->
+        <div class="trust-stats">
+          <div>
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">Clientes satisfechos</div>
+          </div>
+          <div>
+            <div class="stat-number">4.9/5</div>
+            <div class="stat-label">Calificación promedio</div>
+          </div>
+          <div>
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Recomendación</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+      <div class="container">
+        <h2 class="section-title">Contactanos</h2>
+        <p class="section-description">
+          ¿Tenés alguna pregunta sobre Smart Pocket? Estamos acá para ayudarte.
+          Escribinos y te responderemos a la brevedad.
+        </p>
+
+        <div class="contact-grid">
+          <!-- Contact Form -->
+          <div class="contact-form">
+            <h3>Envianos un mensaje</h3>
+            <form onsubmit="submitForm(event)">
+              <div class="form-group">
+                <label for="name" class="form-label">Nombre completo</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  class="form-input"
+                  placeholder="Tu nombre"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-input"
+                  placeholder="tu@email.com"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Mensaje</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  class="form-input form-textarea"
+                  placeholder="Contanos qué te gustaría saber sobre Smart Pocket..."
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%">
+                Enviar mensaje
+                <svg
+                  class="icon"
+                  viewBox="0 0 24 24"
+                  style="margin-left: 0.5rem"
+                >
+                  <path d="m22 2-7 20-4-9-9-4Z" />
+                  <path d="M22 2 11 13" />
+                </svg>
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="contact-info">
+            <div class="contact-item">
+              <div class="contact-icon contact-icon-green">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>Email</h4>
+                <p>info@smartpocket.com.ar</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon contact-icon-gray">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>Teléfono</h4>
+                <p>+54 343 123-4567</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon contact-icon-green">
+                <svg class="icon icon-white" viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div class="contact-details">
+                <h4>Ubicación</h4>
+                <p>Paraná, Entre Ríos, Argentina</p>
+              </div>
+            </div>
+
+            <!-- Map Simulation -->
+            <div class="map-placeholder">
+              <div class="map-grid">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <div class="map-content">
+                <svg class="map-icon" viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <h4
+                  style="
+                    font-weight: 600;
+                    color: #0f172a;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  Nuestra ubicación
+                </h4>
+                <p style="color: #334155; margin-bottom: 1rem">
+                  Paraná, Entre Ríos, Argentina
+                </p>
+                <a
+                  href="https://maps.google.com"
+                  target="_blank"
+                  class="btn btn-outline"
+                  >Ver en Google Maps</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <!-- Brand -->
+          <div>
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="footer-logo-icon">
+                  <svg class="icon icon-white" viewBox="0 0 24 24">
+                    <path
+                      d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"
+                    />
+                    <path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" />
+                  </svg>
+                </div>
+                <span class="footer-logo-text">Smart Pocket</span>
+              </div>
+              <p class="footer-description">
+                La billetera inteligente que combina diseño moderno con
+                tecnología de vanguardia para proteger lo que más importa.
+              </p>
+              <div class="footer-address">
+                <p>Paraná, Entre Ríos</p>
+                <p>Argentina</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="footer-section">
+            <h3>Navegación</h3>
+            <ul class="footer-links">
+              <li><a href="#hero">Inicio</a></li>
+              <li><a href="#about">Qué es</a></li>
+              <li><a href="#advantages">Ventajas</a></li>
+              <li><a href="#models">Modelos</a></li>
+              <li><a href="#reviews">Opiniones</a></li>
+              <li><a href="#contact">Contacto</a></li>
+            </ul>
+          </div>
+
+          <!-- Social Media -->
+          <div class="footer-section">
+            <h3>Seguinos</h3>
+            <div class="social-links">
+              <a
+                href="https://instagram.com/smartpocket.ok"
+                target="_blank"
+                class="social-link"
+              >
+                <svg class="social-icon" viewBox="0 0 24 24">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="m16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+                <span>@smartpocket.ok</span>
+              </a>
+              <a
+                href="https://facebook.com/smartpocket.ok"
+                target="_blank"
+                class="social-link"
+              >
+                <svg class="social-icon" viewBox="0 0 24 24">
+                  <path
+                    d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                  />
+                </svg>
+                <span>smartpocket.ok</span>
+              </a>
+              <a
+                href="https://x.com/smartpocketok"
+                target="_blank"
+                class="social-link"
+              >
+                <svg class="social-icon" viewBox="0 0 24 24">
+                  <path d="m4 4 11.733 16h4.267l-11.733 -16z" />
+                  <path d="m6.5 4l11.5 16" />
+                </svg>
+                <span>@smartpocketok</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Legal -->
+          <div class="footer-section">
+            <h3>Legal</h3>
+            <ul class="footer-links">
+              <li><a href="#">Términos y Condiciones</a></li>
+              <li><a href="#">Política de Privacidad</a></li>
+              <li><a href="#">Garantía</a></li>
+              <li><a href="#">Soporte Técnico</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+          <p>© 2024 Smart Pocket. Todos los derechos reservados.</p>
+          <p>Hecho con ❤️ en Argentina</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu functionality
+      function toggleMobileMenu() {
+        const mobileNav = document.getElementById("mobileNav");
+        mobileNav.classList.toggle("active");
+      }
+
+      function closeMobileMenu() {
+        const mobileNav = document.getElementById("mobileNav");
+        mobileNav.classList.remove("active");
+      }
+
+      // Product slider functionality
+      let currentSlide = 0;
+      const totalSlides = 3;
+
+      function updateSlider() {
+        const slides = document.getElementById("productSlides");
+        const dots = document.querySelectorAll(".slider-dot");
+
+        slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+      }
+
+      function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+      }
+
+      function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+      }
+
+      // Form submission
+      function submitForm(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+
+        // Here you would normally send the data to your server
+        alert("¡Mensaje enviado! Te contactaremos pronto.");
+
+        // Reset form
+        event.target.reset();
+      }
+
+      // Smooth scrolling for navigation links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          }
+        });
+      });
+
+      // Auto-advance slider every 5 seconds
+      setInterval(nextSlide, 5000);
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", function (event) {
+        const mobileNav = document.getElementById("mobileNav");
+        const mobileMenuBtn = document.querySelector(".mobile-menu-btn");
+
+        if (
+          !mobileNav.contains(event.target) &&
+          !mobileMenuBtn.contains(event.target)
+        ) {
+          mobileNav.classList.remove("active");
+        }
+      });
+    </script>
+  </body>
+</html>
